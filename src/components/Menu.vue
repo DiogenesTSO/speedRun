@@ -1,88 +1,99 @@
 <template>
-  <v-card>
-    <v-tabs
-      v-model="tab"
-      align-tabs="center"
-      bg-color="deep-purple-accent-2"
-      stacked
-    >
-      <v-tab value="tab-1">
-        <v-icon icon="mdi-finance"></v-icon>
+  <v-navigation-drawer
+    expand-on-hover
+    rail
+    theme="dark"
+    permanent
+  >
+    <v-list>
+      <v-list-item
+        prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
+        subtitle="sandra_a88@gmailcom"
+        title="Sandra Adams"
+      ></v-list-item>
+    </v-list>
 
-        Dashbord
-      </v-tab>
+    <v-divider></v-divider>
 
-      <v-tab value="tab-2">
-        <v-icon icon="mdi-history"></v-icon>
+    <v-list density="compact" nav>
+      <v-list-item prepend-icon="mdi-finance" title="Dashboard" value="myfiles"></v-list-item>
+      <v-list-item prepend-icon="mdi-history" title="Histórico" value="shared"></v-list-item>
+      <v-list-group value="Cadastrar">
+        <template #activator="{ props }">
+          <v-list-item
+          v-bind="props"
+          prepend-icon="mdi-account-check"
+          title="Cadastrar"></v-list-item>
+        </template>
+        <v-list-item prepend-icon="mdi-run-fast" title="Corredores" value="fast" @click="showCorredoresForms"></v-list-item>
+        <v-list-item prepend-icon="mdi-run-fast" title="Listar Corredores" value="list-fast" @click="viewCorredores"></v-list-item>
+      </v-list-group>
+      <v-list-item prepend-icon="mdi-timer" title="Iniciar Treino" value="starred"></v-list-item>
+    </v-list>
+  </v-navigation-drawer>
 
-        Histórico
-      </v-tab>
+  <v-container v-if="showCorredores">
+    <corredores-list />
+  </v-container>
 
-      <v-tab value="tab-3">
-        <v-icon icon="mdi-account-check"></v-icon>
+  <div v-if="showForm">
+      <v-form @submit.prevent="submitForm">
+        <v-text-field
+          v-model="formData.nome"
+          label="Nome"
+          outlined
+          required
+          color="primary"
+        ></v-text-field>
 
-        Cadastrar
-      </v-tab>
+        <v-text-field
+          v-model="formData.email"
+          label="E-mail"
+          type="email"
+          required
+        ></v-text-field>
 
-      <v-tab value="tab-4">
-        <v-icon icon="mdi-run-fast"></v-icon>
+        <v-text-field
+          v-model="formData.telefone"
+          label="Telefone"
+          required
+        ></v-text-field>
 
-        Iniciar Treino
-      </v-tab>
-    </v-tabs>
+        <v-text-field
+          v-model="formData.dataNascimento"
+          label="Data de Nascimento"
+          type="date"
+          required
+        ></v-text-field>
 
-    <v-tab-item value="tab-2">
-        <v-form @submit.prevent="submitForm">
-          <v-text-field
-            v-model="formData.nome"
-            label="Nome"
-            outlined
-            required
-            color="primary"
-          ></v-text-field>
+        <v-radio-group v-model="formData.sexo" label="Sexo" row>
+          <v-radio label="Masculino" value="M" color="primary"></v-radio>
+          <v-radio label="Feminino" value="F" color="pink"></v-radio>
+        </v-radio-group>
 
-          <v-text-field
-            v-model="formData.email"
-            label="E-mail"
-            type="email"
-            required
-          ></v-text-field>
+        <v-btn color="primary" type="submit">
+          Cadastrar
+        </v-btn>
+      </v-form>
+    </div>
 
-          <v-text-field
-            v-model="formData.telefone"
-            label="Telefone"
-            required
-          ></v-text-field>
-
-          <v-text-field
-            v-model="formData.dataNascimento"
-            label="Data de Nascimento"
-            type="date"
-            required
-          ></v-text-field>
-
-          <v-radio-group v-model="formData.sexo" label="Sexo" row>
-            <v-radio label="Masculino" value="M" color="primary"></v-radio>
-            <v-radio label="Feminino" value="F" color="pink"></v-radio>
-          </v-radio-group>
-
-          <v-btn color="primary" type="submit">
-            Cadastrar
-          </v-btn>
-        </v-form>
-      </v-tab-item>
-
-  </v-card>
 </template>
+<v-card>
+</v-card> 
 
 <script>
+import CorredoresList from './ListarCorredores.vue';
 import axios from 'axios';
 
 export default {
   name: 'menuComponent',
+  components: {
+    CorredoresList
+  },
   data() {
     return {
-      activeTab: 'tab-2', 
+      showForm: false, 
+      showCorredores: false,
       formData: {
         nome: '',
         email: '',
@@ -93,6 +104,12 @@ export default {
     };
   },
   methods: {
+    showCorredoresForms() {
+      this.showForm = true;
+    },
+    viewCorredores() {
+      this.showCorredores = true;
+    },
     async submitForm() {
       try {
         // Enviando os dados para a API
@@ -120,7 +137,7 @@ export default {
       }
     },
   },
-};
+}; 
 
 </script>
 
