@@ -32,50 +32,12 @@
     </v-list>
   </v-navigation-drawer>
 
-  <v-container v-if="showCorredores">
-    <corredores-list />
-  </v-container>
-
-  <div v-if="showForm">
-      <v-form @submit.prevent="submitForm">
-        <v-text-field
-          v-model="formData.nome"
-          label="Nome"
-          outlined
-          required
-          color="primary"
-        ></v-text-field>
-
-        <v-text-field
-          v-model="formData.email"
-          label="E-mail"
-          type="email"
-          required
-        ></v-text-field>
-
-        <v-text-field
-          v-model="formData.telefone"
-          label="Telefone"
-          required
-        ></v-text-field>
-
-        <v-text-field
-          v-model="formData.dataNascimento"
-          label="Data de Nascimento"
-          type="date"
-          required
-        ></v-text-field>
-
-        <v-radio-group v-model="formData.sexo" label="Sexo" row>
-          <v-radio label="Masculino" value="M" color="primary"></v-radio>
-          <v-radio label="Feminino" value="F" color="pink"></v-radio>
-        </v-radio-group>
-
-        <v-btn color="primary" type="submit">
-          Cadastrar
-        </v-btn>
-      </v-form>
-    </div>
+  <v-main>
+      <v-container>
+        <cadastro-corredores v-if="showCadastro" />
+        <corredores-list v-if="showCorredores" />
+      </v-container>
+    </v-main>
 
 </template>
 <v-card>
@@ -83,68 +45,32 @@
 
 <script>
 import CorredoresList from './ListarCorredores.vue';
-import axios from 'axios';
+import CadastroCorredores from './CadastrarCorredores.vue';
 
 export default {
   name: 'menuComponent',
   components: {
-    CorredoresList
+    CorredoresList,
+    CadastroCorredores,
   },
   data() {
     return {
-      showForm: false, 
+      showCadastro: false, 
       showCorredores: false,
-      formData: {
-        nome: '',
-        email: '',
-        telefone: '',
-        dataNascimento: '',
-        sexo: '',
-      },
     };
   },
   methods: {
     showCorredoresForms() {
-      this.showForm = true;
+      this.showCadastro = true;
+      this.showCorredores = false;
     },
     viewCorredores() {
       this.showCorredores = true;
-    },
-    async submitForm() {
-      try {
-        // Enviando os dados para a API
-        const response = await axios.post('http://127.0.0.1:8000/api/corredores', this.formData);
-
-        // Exibindo a resposta da API no console (ou trate como necessário)
-        console.log('Resposta da API:', response.data);
-
-        // Limpar o formulário após sucesso
-        this.formData = {
-          nome: '',
-          email: '',
-          telefone: '',
-          dataNascimento: '',
-          sexo: '',
-        };
-
-        // Exibir uma notificação de sucesso (opcional)
-        alert('Corredor cadastrado com sucesso!');
-      } catch (error) {
-        console.error('Erro ao cadastrar o corredor:', error);
-
-        // Exibir uma notificação de erro (opcional)
-        alert('Erro ao cadastrar o corredor. Tente novamente.');
-      }
+      this.showCadastro = false;
     },
   },
 }; 
 
 </script>
 
-<style scoped>
-.v-form {
-  max-width: 600px;
-  margin: auto;
-}
-</style>
 

@@ -1,10 +1,7 @@
 <template>
-    <v-container>
       <v-data-table
         :headers="headers"
         :items="corredores"
-        item-value="id"
-        class="elevation-1"
       >
         <template v-slot:top>
           <v-toolbar flat>
@@ -12,7 +9,6 @@
           </v-toolbar>
         </template>
       </v-data-table>
-    </v-container>
   </template>
   
   <script>
@@ -20,6 +16,13 @@
     data() {
       return {
         corredores: [],
+        headers: [
+        { text: 'Nome', value: 'nome' },
+        { text: 'E-mail', value: 'email' },
+        { text: 'Telefone', value: 'telefone' },
+        { text: 'Data de Nascimento', value: 'dataNascimento' },
+        { text: 'Sexo', value: 'sexo' },
+      ],
       };
     },
     created() {
