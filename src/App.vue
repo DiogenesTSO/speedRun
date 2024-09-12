@@ -1,19 +1,19 @@
 <template>
   <v-app>
     <v-main>
-      <Menu/>
+      <CustomMenu />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import Menu from './components/Menu.vue'
+import CustomMenu from './components/Menu.vue'
 
 export default {
   name: 'App',
 
   components: {
-    Menu,
+    CustomMenu,
   },
 
   data: () => ({

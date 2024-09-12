@@ -1,7 +1,7 @@
 <template>
   <v-container class="d-flex justify-center align-center fill-height">
-      <v-form class="formCad" @submit.prevent="submitForm">
-        <h2>Cadastrar Corredores</h2>
+    <v-form class="formCad" @submit.prevent="submitForm">
+      <h2>Cadastrar Corredores</h2>
         <v-text-field
           v-model="formData.nome"
           :rules="nameRules"
@@ -40,78 +40,76 @@
         </v-radio-group>
 
         <v-sheet class="d-flex justify-center">
-      <v-btn class="btn-1"
-        type="submit"
-        color="deep-purple-darken-2"
-        size="small"
-        block
-        @click="submitForm"
-      >
-        Cadastrar
-      </v-btn>
-    </v-sheet>
+          <v-btn class="btn-1"
+            type="submit"
+            color="deep-purple-darken-2"
+            size="small"
+            block
+            >
+                Cadastrar
+          </v-btn>
+        </v-sheet>
 
-    
-    <v-dialog v-model="dialogSuccess" max-width="600">
-      <v-card
-        v-if="dialogSuccess"
-        append-icon="$close"
-        elevation="16"
-        max-width="600"
-        title="Sucesso"
-      >
-        <template v-slot:append>
-          <v-btn icon="$close" variant="text" @click="dialogSuccess = false"></v-btn>
-        </template>
+        <v-dialog v-model="dialogSuccess" max-width="600">
+           <v-card
+              v-if="dialogSuccess"
+              append-icon="$close"
+              elevation="16"
+              max-width="600"
+              title="Sucesso"
+              >
+              <template v-slot:append>
+                <v-btn icon="$close" variant="text" @click="dialogSuccess = false"></v-btn>
+              </template>
 
-        <v-divider></v-divider>
+                <v-divider></v-divider>
 
-        <div class="py-12 text-center">
-          <v-icon
-            class="mb-6"
-            color="success"
-            icon="mdi-check-circle-outline"
-            size="128"
-          ></v-icon>
+              <div class="py-12 text-center">
+                <v-icon
+                  class="mb-6"
+                  color="success"
+                  icon="mdi-check-circle-outline"
+                  size="128"
+                ></v-icon>
 
-          <div class="text-h5 font-weight-bold">Cadastrado com sucesso!</div>
-        </div>
+                <div class="text-h5 font-weight-bold">Corredor cadastrado com sucesso!</div>
+              </div>
 
-        <v-divider></v-divider>
-      </v-card>
-    </v-dialog>
+                  <v-divider></v-divider>
+             </v-card>
+         </v-dialog>
 
-    <v-dialog v-model="dialogError" max-width="600">
-    <v-card
-      v-if="dialogError"
-      append-icon="$close"
-      elevation="16"
-      max-width="600"
-      title="Erro"
-    >
-      <template v-slot:append>
-        <v-btn icon="$close" variant="text" @click="dialogError = false"></v-btn>
-      </template>
+          <v-dialog v-model="dialogError" max-width="600">
+            <v-card
+                v-if="dialogError"
+                append-icon="$close"
+                elevation="16"
+                max-width="600"
+                title="Erro"
+                >
+                <template v-slot:append>
+                  <v-btn icon="$close" variant="text" @click="dialogError = false"></v-btn>
+                </template>
 
-      <v-divider></v-divider>
+                <v-divider></v-divider>
 
-      <div class="py-12 text-center">
-        <v-icon
-          class="mb-6"
-          color="error"
-          icon="mdi-alert-circle-outline"
-          size="100"
-        ></v-icon>
+              <div class="py-12 text-center">
+                <v-icon
+                  class="mb-6"
+                  color="error"
+                  icon="mdi-alert-circle-outline"
+                  size="100"
+                ></v-icon>
 
-        <div class="text-h5 font-weight-bold">Ocorreu um erro no cadastro!</div>
-      </div>
+                <div class="text-h5 font-weight-bold">Ocorreu um erro no cadastro!</div>
+              </div>
 
-      <v-divider></v-divider>
+              <v-divider></v-divider>
 
-    </v-card>
-</v-dialog>
-      </v-form>
-    </v-container>
+            </v-card>
+        </v-dialog>
+    </v-form>
+  </v-container>
 </template>
 
 <script>
