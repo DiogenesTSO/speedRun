@@ -9,7 +9,7 @@
       <v-list-item
         prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
         subtitle="sandra_a88@gmailcom"
-        title="Sandra Adams"
+        title="Diógenes Odisi"
       ></v-list-item>
     </v-list>
 

@@ -1,31 +1,35 @@
 <template>
-    <h2>Cadastrar Corredores</h2>
-      <v-form @submit.prevent="submitForm">
+  <v-container class="d-flex justify-center align-center fill-height">
+      <v-form class="formCad" @submit.prevent="submitForm">
+        <h2>Cadastrar Corredores</h2>
         <v-text-field
           v-model="formData.nome"
           :rules="nameRules"
           label="Nome"
           outlined
           required
-          color="primary"
+          color="success"
         ></v-text-field>
 
         <v-text-field
           v-model="formData.email"
           label="E-mail"
           type="email"
+          color="success"
           required
         ></v-text-field>
 
         <v-text-field
           v-model="formData.telefone"
           label="Telefone"
+          color="success"
           required
         ></v-text-field>
 
         <v-text-field
           v-model="formData.dataNascimento"
           label="Data de Nascimento"
+          color="success"
           type="date"
           required
         ></v-text-field>
@@ -35,19 +39,18 @@
           <v-radio label="Feminino" value="F" color="pink"></v-radio>
         </v-radio-group>
 
-        <v-sheet
-    class="position-relative"
-    min-height="450"
-  >
-    
-      <v-btn
+        <v-sheet class="d-flex justify-center">
+      <v-btn class="btn-1"
         type="submit"
         color="deep-purple-darken-2"
         size="small"
+        block
         @click="submitForm"
       >
         Cadastrar
       </v-btn>
+    </v-sheet>
+
     
     <v-dialog v-model="dialogSuccess" max-width="600">
       <v-card
@@ -107,8 +110,8 @@
 
     </v-card>
 </v-dialog>
-  </v-sheet>
       </v-form>
+    </v-container>
 </template>
 
 <script>
@@ -157,3 +160,23 @@ export default {
 };
 
 </script>
+
+<style scoped>
+
+.fill-height {
+  height: 100vh; /* Faz o container ocupar 100% da altura da tela */
+}
+
+.formCad {
+  width: 100%; /* Largura do formulário */
+  padding: 15px; /* Espaçamento interno */
+  border-radius: 8px; /* Bordas arredondadas */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.89); /* Sombra suave */
+}
+
+h2 {
+  text-align: center;
+}
+
+</style>
+

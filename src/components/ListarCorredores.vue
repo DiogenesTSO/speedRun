@@ -1,17 +1,37 @@
 <template>
-      <v-data-table
-        :headers="headers"
-        :items="corredores"
-      >
-        <template v-slot:top>
-          <v-toolbar flat>
-            <v-toolbar-title>Lista de Corredores</v-toolbar-title>
-          </v-toolbar>
-        </template>
-      </v-data-table>
-  </template>
+  <v-data-table :headers="headers" :items="items" :loading="loading">
+    <template v-slot:loading>
+      <v-progress-linear indeterminate color="primary"></v-progress-linear>
+    </template>
+  </v-data-table>
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+
+const items = ref([])
+const loading = ref(false)
+
+onMounted(async () => {
+  loading.value = true
+  try {
+    const response = await fetch("http://127.0.0.1:8000/api/list-corredores")
+    const data = await response.json()
+
+    items.value = data
+
+  } catch (error) {
+    console.error('Erro ao carregar os dados da API', error)
+  } finally {
+    loading.value = false
+  }
+})
+</script>
+
+
+
   
-  <script>
+ <!-- <script>
   export default {
     data() {
       return {
@@ -40,7 +60,7 @@
       },
     },
   };
-  </script>
+  </script> -->
   
   <style scoped>
   /* Estilos opcionais */
