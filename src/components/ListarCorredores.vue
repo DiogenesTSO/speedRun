@@ -24,10 +24,10 @@
             <td>{{ corredor.sexo }}</td>
             <td>{{ formatDate(corredor.created_at) }}</td>
             <td>
-              <v-btn icon size="small" @click="editar(corredor.id)">
+              <v-btn icon size="x-small" @click="openEditModal(corredor)">
                 <v-icon size="small" color="blue">mdi-pencil</v-icon>
               </v-btn>
-              <v-btn icon size="small" @click="openDeleteModal(corredor)">
+              <v-btn icon size="x-small" @click="openDeleteModal(corredor)">
                 <v-icon size="small" color="red">mdi-delete</v-icon>
               </v-btn>
             </td>
@@ -41,6 +41,27 @@
       :length="totalPages"
       @input="updatePage"
     ></v-pagination>
+
+    <!-- Modal para editar corredor -->
+     <v-dialog v-model="dialogEdit" max-width="500">
+      <v-card>
+        <v-card-title class="headline">Editar Corredor</v-card-title>
+          <v-card-text>
+            <v-form>
+              <v-text-field v-model="formData.nome" label="Nome" required></v-text-field>
+              <v-text-field v-model="formData.email" label="Email" required></v-text-field>
+              <v-text-field v-model="formData.telefone" label="Telefone" required></v-text-field>
+              <v-text-field v-model="formData.dataNascimento" label="Data de Nascimento" type="date" required></v-text-field>
+              <v-select v-model="formData.sexo" :items="['Masculino', 'Feminino']" label="Sexo" required></v-select>
+            </v-form>
+          </v-card-text>
+        <v-card-acrtions>
+          <v-spacer></v-spacer>
+          <v-btn color="red darken-1" text @click="cancelEdit">Cancelar</v-btn>
+          <v-btn color="green darken-1" text @click="confirmEdit">confirmar</v-btn>
+        </v-card-acrtions>
+      </v-card>
+     </v-dialog>
 
     <!-- Modal de confirmação de exclusão -->
      <v-dialog v-model="dialog" max-width="400">
@@ -59,6 +80,7 @@
     <v-snackbar
       v-model="snackbar"
       :color="snackbarColor"
+      :timeout="timeout"
       elevation="2"
     >
       {{ snackbarMessage }}
@@ -79,10 +101,20 @@
         currentPage: 1,
         itemsPerPage: 10,
         dialog: false,
+        dialogEdit: false,
+        corredorToEdit: null,
         corredorToDelete: null,
+        timeout: 2000,
         snackbar: false,
         snackbarMessage: '',
         snackbarColor: '',
+        formData: {
+          nome: '',
+          email: '',
+          telefone: '',
+          dataNascimento: '',
+          sexo: '',
+        }
       };
     },
     computed: {
@@ -120,11 +152,36 @@
         this.dialog = true;
       },
 
+      openEditModal(corredor) {
+        this.corredorToEdit = corredor;
+        this.formData = {...corredor };
+        this.dialogEdit = true;
+      },
+
+      cancelEdit() {
+        this.dialogEdit = false;
+        this.corredorToEdit = null;
+      },
+
       cancelDelete() {
         this.dialog = false;
         this.corredorToDelete = null;
       },
-    
+
+      async confirmEdit() {
+        try {
+          await axios.put(`http://127.0.0.1:8000/api/edit-corredores/${this.corredorToEdit.id}`, this.formData);
+          this.dialogEdit = false;
+          const index = this.corredores.findIndex(c => c.id === this.corredorToEdit.id);
+          if (index !== -1) {
+            this.corredores[index] = {...this.corredorToEdit, ...this.formData };
+          }
+          this.dialogEdit = false;
+        } catch (error) {
+          console.error('erro ao editar corredor:', error);
+        }
+      },
+
     async confirmDelete() {
         try {
           await axios.delete(`http://127.0.0.1:8000/api/corredores/${this.corredorToDelete.id}`);
