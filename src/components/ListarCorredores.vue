@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex justify-center align-center" style="height: 95vh;">
     <v-card flat class="border mb-4" style="margin-left: -50px;">
-      <v-card-title>Corredores</v-card-title>
+      <h2>Corredores</h2>
 
       <v-table density="compact">
         <thead>
@@ -48,18 +48,18 @@
         <v-card-title class="headline">Editar Corredor</v-card-title>
           <v-card-text>
             <v-form>
-              <v-text-field v-model="formData.nome" label="Nome" required></v-text-field>
-              <v-text-field v-model="formData.email" label="Email" required></v-text-field>
-              <v-text-field v-model="formData.telefone" label="Telefone" required></v-text-field>
-              <v-text-field v-model="formData.dataNascimento" label="Data de Nascimento" type="date" required></v-text-field>
-              <v-select v-model="formData.sexo" :items="['Masculino', 'Feminino']" label="Sexo" required></v-select>
+              <v-text-field v-model="formData.nome" variant="underlined" color="primary" label="Nome" required></v-text-field>
+              <v-text-field v-model="formData.email" variant="underlined" color="primary" label="Email" required></v-text-field>
+              <v-text-field v-model="formData.telefone" variant="underlined" color="primary" label="Telefone" required></v-text-field>
+              <v-text-field v-model="formData.dataNascimento" variant="underlined" color="primary" label="Data de Nascimento" type="date" required></v-text-field>
+              <v-select v-model="formData.sexo" :items="['Masculino', 'Feminino']" variant="underlined" color="primary" label="Sexo" required></v-select>
             </v-form>
           </v-card-text>
-        <v-card-acrtions>
+          <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="red darken-1" text @click="cancelEdit">Cancelar</v-btn>
-          <v-btn color="green darken-1" text @click="confirmEdit">confirmar</v-btn>
-        </v-card-acrtions>
+          <v-btn color="green darken-1" text @click="confirmEdit">Confirmar</v-btn>
+        </v-card-actions>
       </v-card>
      </v-dialog>
 
@@ -71,7 +71,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="red darken-1" text @click="cancelDelete">Cancelar</v-btn>
-          <v-btn color="green darke-1" text @click="confirmDelete">Confirmar</v-btn>
+          <v-btn color="green darken-1" text @click="confirmDelete">Confirmar</v-btn>
         </v-card-actions>
       </v-card>
      </v-dialog>
@@ -208,6 +208,10 @@
     width: 100%; /* Largura do formulário */
     border-radius: 8px; /* Bordas arredondadas */
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.89); /* Sombra suave */
+  }
+
+  h2 {
+    text-align: center;
   }
   </style>
   

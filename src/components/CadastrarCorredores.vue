@@ -2,34 +2,35 @@
   <v-container class="d-flex justify-center align-center fill-height">
     <v-form class="formCad" @submit.prevent="submitForm">
       <h2>Cadastrar Corredores</h2>
-        <v-text-field
-          v-model="formData.nome"
-          :rules="nameRules"
-          label="Nome"
-          outlined
-          required
-          color="success"
-        ></v-text-field>
+      <v-text-field
+        v-model="formData.nome"
+        color="primary"
+        label="Nome"
+        variant="underlined"
+      ></v-text-field>
 
         <v-text-field
           v-model="formData.email"
           label="E-mail"
           type="email"
-          color="success"
+          color="primary"
+          variant="underlined"
           required
         ></v-text-field>
 
         <v-text-field
           v-model="formData.telefone"
           label="Telefone"
-          color="success"
+          color="primary"
+          variant="underlined"
           required
         ></v-text-field>
 
         <v-text-field
           v-model="formData.dataNascimento"
           label="Data de Nascimento"
-          color="success"
+          color="primary"
+          variant="underlined"
           type="date"
           required
         ></v-text-field>
@@ -125,7 +126,7 @@ export default {
                 sexo: "",
             },
             dialogSuccess: false,
-            dialogError: false, 
+            dialogError: false,
         };
     },
     methods: {
@@ -175,6 +176,5 @@ export default {
 h2 {
   text-align: center;
 }
-
 </style>
 
