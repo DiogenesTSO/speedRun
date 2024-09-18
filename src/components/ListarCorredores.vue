@@ -22,7 +22,7 @@
             <td>{{ corredor.telefone }}</td>
             <td>{{ formatDate(corredor.dataNascimento) }}</td>
             <td>{{ corredor.sexo }}</td>
-            <td>{{ formatDate(corredor.created_at) }}</td>
+            <td>{{ formatDateTime(corredor.created_at) }}</td>
             <td>
               <v-btn icon size="x-small" @click="openEditModal(corredor)">
                 <v-icon size="small" color="blue">mdi-pencil</v-icon>
@@ -140,11 +140,13 @@
         }
       },
       formatDate(dateString) {
-        const date = new Date(dateString);
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
+        const [year, month, day] = dateString.split('-');
+        return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
+      },
+
+      formatDateTime(dateTimeString) {
+        const [date] = dateTimeString.split('T');
+        return this.formatDate(date);
       },
 
       openDeleteModal(corredor) {
