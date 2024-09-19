@@ -1,19 +1,19 @@
 <template>
   <v-app>
     <v-main>
-      <CustomMenu />
+      <CustomLogin />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import CustomMenu from './components/Menu.vue'
+import CustomLogin from './components/LoginPage.vue'
 
 export default {
   name: 'App',
 
   components: {
-    CustomMenu,
+    CustomLogin,
   },
 
   data: () => ({
