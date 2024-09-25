@@ -2,24 +2,28 @@
     <v-app id="login-page">
       <v-main>
         <v-container fluid fill-height>
-          <v-layout align-center justify-center>
-            <v-flex xs12 sm8 md4>
               <!-- Formulário de Login -->
               <v-card class="elevation-12">
                 <v-toolbar dark color="primary">
                   <v-toolbar-title>Login</v-toolbar-title>
                 </v-toolbar>
                 <v-card-text>
-                  <v-form>
+                  <v-form ref="loginFormRef" v-model="isFormValid">
                     <v-text-field
                       v-model="loginForm.email"
+                      :rules="[rules.required, rules.email]"
                       label="E-mail"
+                      variant="underlined"
+                      color="primary"
                       prepend-icon="mdi-email"
                       required
                     ></v-text-field>
                     <v-text-field
                       v-model="loginForm.password"
+                      :rules="[rules.required, rules.minPassword]"
                       label="Senha"
+                      variant="underlined"
+                      color="primary"
                       prepend-icon="mdi-lock"
                       type="password"
                       required
@@ -28,7 +32,7 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="primary" @click="login">Entrar</v-btn>
+                  <v-btn color="primary" @click="validateAndLogin">Entrar</v-btn>
                 </v-card-actions>
                 <v-card-actions>
                   <v-spacer></v-spacer>
@@ -36,30 +40,42 @@
                   <v-btn color="secondary" @click="openRegisterModal">Cadastrar</v-btn>
                 </v-card-actions>
               </v-card>
-            </v-flex>
-          </v-layout>
         </v-container>
   
         <!-- Modal para Cadastro -->
         <v-dialog v-model="dialogRegister" max-width="500">
           <v-card>
-            <v-card-title class="headline">Cadastrar Novo Usuário</v-card-title>
+            <v-card-title class="headline">Novo Acesso</v-card-title>
             <v-card-text>
               <v-form>
                 <v-text-field
-                  v-model="registerForm.nome"
+                  v-model="registerForm.name"
+                  :rules="[rules.required, rules.nome]"
                   label="Nome Completo"
+                  variant="underlined"
                   required
                 ></v-text-field>
                 <v-text-field
                   v-model="registerForm.email"
+                  :rules="[rules.required, rules.email]"
                   label="E-mail"
+                  variant="underlined"
                   required
                 ></v-text-field>
                 <v-text-field
                   v-model="registerForm.password"
+                  :rules="[rules.required, rules.minPassword]"
                   label="Senha"
                   type="password"
+                  variant="underlined"
+                  required
+                ></v-text-field>
+                <v-text-field
+                  v-model="registerForm.password_confirmation"
+                  :rules="[rules.required, rules.minPassword]"
+                  label="Confirmar Senha"
+                  type="password"
+                  variant="underlined"
                   required
                 ></v-text-field>
               </v-form>
@@ -76,9 +92,12 @@
   </template>
   
   <script>
+  import axios from 'axios';
+
   export default {
     data() {
       return {
+        isFormValid: false,
         dialogRegister: false, // Controle do modal de cadastro
         loginForm: {
           email: '',
@@ -87,14 +106,38 @@
         registerForm: {
           nome: '',
           email: '',
-          password: ''
+          password: '',
+          password_confirmation: '',
+        },
+        rules: {
+          required: value => !!value || 'Campo obrigatório',
+          email: value => {
+            const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+            return pattern.test(value) || 'Email inválido'
+          },
+          minPassword: value => (value && value.length >= 8) || 'A senha deve conter no mínimo 8 ou mais caracteres'
         }
-      };
+      }
     },
     methods: {
-      login() {
-        // Lógica para login
-        console.log('Login realizado com:', this.loginForm);
+      validateAndLogin() {
+        this.$refs.loginFormRef.validate()
+        if (this.isFormValid) {
+          this.login()
+        }
+      },
+      async login() {
+        try {
+          await axios.post('http://127.0.0.1:8000/api/login', this.loginForm);
+
+          this.$router.push('/home');
+        } catch (error) {
+          if (error.response && error.response.status === 401) {
+            alert('Erro ao realizar login: ' + error.response.data.message);
+          } else {
+            alert('Tente novamente');
+          }
+        }
       },
       openRegisterModal() {
         // Abre o modal de cadastro
@@ -103,19 +146,36 @@
       cancelRegister() {
         // Fecha o modal de cadastro
         this.dialogRegister = false;
+        this.resetRegisterForm();
       },
-      registerUser() {
-        // Lógica para cadastro de novo usuário
-        console.log('Cadastro de novo usuário:', this.registerForm);
-        this.dialogRegister = false; // Fecha o modal após o cadastro
-      }
-    }
+      resetRegisterForm() {
+        this.registerForm.name = '';
+        this.registerForm.email = '';
+        this.registerForm.password = '';
+        this.registerForm.password_confirmation = '';
+      },
+      async registerUser() {
+        try {
+          const response = await axios.post('http://127.0.0.1:8000/api/registrar', this.registerForm);
+          alert(response.data.message);
+          this.dialogRegister = false;
+          this.resetRegisterForm();
+        } catch (error) {
+          console.error(error);
+          if (error.response && error.response.data) {
+            alert('erro:' + Object.values(error.response.data).flat().join(', '));
+          } else {
+            alert('erro ao cadastrar');
+          }
+        }
+      },
+    },
   };
   </script>
   
   <style scoped>
   #login-page {
-    background-color: #f5f5f5;
+    background-color: #ddd6d6;
     height: 100vh;
   }
   </style>

@@ -8,10 +8,10 @@
     <v-list>
       <v-list-item
         prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-        subtitle="sandra_a88@gmailcom"
+        subtitle="Diogenes@gmailcom"
         title="Diógenes Odisi"
       ></v-list-item>
-    </v-list>
+    </v-list> 
 
     <v-divider></v-divider>
 
@@ -30,6 +30,12 @@
       </v-list-group>
       <v-list-item prepend-icon="mdi-timer" title="Iniciar Treino" value="starred"></v-list-item>
     </v-list>
+
+    <v-spacer></v-spacer>
+    <v-list>
+      <v-list-item prepend-icon="mdi-logout" title="Sair" @click="logout"></v-list-item>
+    </v-list>
+
   </v-navigation-drawer>
 
   <v-main>
@@ -68,6 +74,9 @@ export default {
       this.showCorredores = true;
       this.showCadastro = false;
     },
+    logout() {
+      this.$router.push('/');
+    }
   },
 }; 
 
