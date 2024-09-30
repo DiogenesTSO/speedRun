@@ -19,6 +19,15 @@
         ></v-text-field>
 
         <v-text-field
+          v-model="formData.cpf"
+          label="CPF"
+          type="text"
+          color="primary"
+          variant="underlined"
+          required
+        ></v-text-field>
+
+        <v-text-field
           v-model="formData.telefone"
           label="Telefone"
           color="primary"
@@ -121,6 +130,7 @@ export default {
             formData: {
                 nome: "",
                 email: "",
+                cpf: "",
                 telefone: "",
                 dataNascimento: "",
                 sexo: "",
@@ -145,7 +155,8 @@ export default {
 
                 this.formData = {
                     nome: "",
-                    email: "", 
+                    email: "",
+                    cpf: "", 
                     telefone: "",
                     dataNascimento: "",
                     sexo: "",

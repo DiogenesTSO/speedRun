@@ -8,6 +8,7 @@
           <tr>
             <th>Nome</th>
             <th>Email</th>
+            <th>Cpf</th>
             <th>Telefone</th>
             <th>Data de Nascimento</th>
             <th>Sexo</th>
@@ -19,6 +20,7 @@
           <tr v-for="corredor in paginatedCorredores" :key="corredor.id">
             <td>{{ corredor.nome }}</td>
             <td>{{ corredor.email }}</td>
+            <td>{{ corredor.cpf }}</td>
             <td>{{ corredor.telefone }}</td>
             <td>{{ formatDate(corredor.dataNascimento) }}</td>
             <td>{{ corredor.sexo }}</td>
@@ -50,6 +52,7 @@
             <v-form>
               <v-text-field v-model="formData.nome" variant="underlined" color="primary" label="Nome" required></v-text-field>
               <v-text-field v-model="formData.email" variant="underlined" color="primary" label="Email" required></v-text-field>
+              <v-text-field v-model="formData.cpf" variant="underlined" color="primary" label="Cpf" required></v-text-field>
               <v-text-field v-model="formData.telefone" variant="underlined" color="primary" label="Telefone" required></v-text-field>
               <v-text-field v-model="formData.dataNascimento" variant="underlined" color="primary" label="Data de Nascimento" type="date" required></v-text-field>
               <v-select v-model="formData.sexo" :items="['Masculino', 'Feminino']" variant="underlined" color="primary" label="Sexo" required></v-select>
@@ -111,6 +114,7 @@
         formData: {
           nome: '',
           email: '',
+          cpf: '',
           telefone: '',
           dataNascimento: '',
           sexo: '',

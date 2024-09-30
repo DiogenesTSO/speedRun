@@ -26,9 +26,10 @@
           title="Cadastrar"></v-list-item>
         </template>
         <v-list-item prepend-icon="mdi-run-fast" title="Corredores" value="fast" @click="showCorredoresForms"></v-list-item>
-        <v-list-item prepend-icon="mdi-run-fast" title="Listar Corredores" value="list-fast" @click="viewCorredores"></v-list-item>
+        <v-list-item prepend-icon="mdi-view-list" title="Listar Corredores" value="list-fast" @click="viewCorredores"></v-list-item>
       </v-list-group>
-      <v-list-item prepend-icon="mdi-timer" title="Iniciar Treino" value="starred"></v-list-item>
+      <v-list-item prepend-icon="mdi-update" title="Interface de Controles" value="starred"></v-list-item>
+      <v-list-item prepend-icon="mdi-calendar-edit" title="Gestão de Eventos" value="starred"></v-list-item>
     </v-list>
 
     <v-spacer></v-spacer>
