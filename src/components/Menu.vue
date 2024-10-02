@@ -41,6 +41,7 @@
 
   <v-main>
       <v-container>
+        <dashboard-layout v-if="showDashboard" />
         <cadastro-corredores v-if="showCadastro" />
         <corredores-list v-if="showCorredores" />
       </v-container>
@@ -53,12 +54,14 @@
 <script>
 import CorredoresList from './ListarCorredores.vue';
 import CadastroCorredores from './CadastrarCorredores.vue';
+import DashboardLayout from './DashboardLayout.vue';
 
 export default {
   name: 'menuComponent',
   components: {
     CorredoresList,
     CadastroCorredores,
+    DashboardLayout,
   },
   data() {
     return {
@@ -70,15 +73,19 @@ export default {
   methods: {
     viewDashboard() {
       this.showDashboard = true;
-      this.showDashboard = false;
+      this.showCadastro = false;
+      this.showCorredores = false;
+
     },
     showCorredoresForms() {
       this.showCadastro = true;
       this.showCorredores = false;
+      this.showDashboard = false;
     },
     viewCorredores() {
       this.showCorredores = true;
       this.showCadastro = false;
+      this.showDashboard = false;
     },
     logout() {
       this.$router.push('/');
