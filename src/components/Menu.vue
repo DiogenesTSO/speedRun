@@ -16,7 +16,7 @@
     <v-divider></v-divider>
 
     <v-list density="compact" nav>
-      <v-list-item prepend-icon="mdi-finance" title="Dashboard" value="myfiles"></v-list-item>
+      <v-list-item prepend-icon="mdi-finance" title="Dashboard" value="myfiles" @click="viewDashboard"></v-list-item>
       <v-list-item prepend-icon="mdi-history" title="Histórico" value="shared"></v-list-item>
       <v-list-group value="Cadastrar">
         <template #activator="{ props }">
@@ -62,11 +62,16 @@ export default {
   },
   data() {
     return {
+      showDashboard: false,
       showCadastro: false, 
       showCorredores: false,
     };
   },
   methods: {
+    viewDashboard() {
+      this.showDashboard = true;
+      this.showDashboard = false;
+    },
     showCorredoresForms() {
       this.showCadastro = true;
       this.showCorredores = false;

@@ -43,6 +43,16 @@
               </v-card>
             </v-col>
             </v-row>
+
+            <v-snackbar
+              v-model="snackbar"
+              :color="snackbarColor"
+              :timeout="timeout"
+              elevation="2"
+            >
+              {{ snackbarMessage }}
+            </v-snackbar>
+
         </v-container>
 
         <!-- Modal de redefinição de senha -->
@@ -128,6 +138,10 @@
         isFormValid: false,
         dialogRegister: false, // Controle do modal de cadastro
         dialogResetPassword: false,
+        timeout: 3000,
+        snackbar: false,
+        snackbarMessage: '',
+        snackbarColor: '',
         loginForm: {
           email: '',
           password: ''
@@ -155,10 +169,14 @@
     methods: {
       validateAndLogin() {
         this.loading = true
-        this.$refs.loginFormRef.validate()
-        if (this.isFormValid) {
-          this.login()
-        }
+        this.$refs.loginFormRef.validate().then((isValid) => {
+          if (isValid) {
+            this.login();
+          } else {
+            this.loading = false;
+          }
+        });
+        
       },
       async login() {
         try {
@@ -166,8 +184,14 @@
           this.$router.push('/home');
         } catch (error) {
           if (error.response && error.response.status === 401) {
-            alert('Erro ao realizar login: ' + error.response.data.message);
-          } 
+            this.snackbarMessage = 'Usuário ou senha inválido!';
+            this.snackbarColor = 'red';
+            this.snackbar = true;
+          } else {
+            this.snackbarMessage = 'Erro ao conectar com o servidor.';
+            this.snackbarColor = 'orange';
+            this.snackbar = true;
+          }
         } finally {
             this.loading = false;
           }

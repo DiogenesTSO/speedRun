@@ -183,8 +183,9 @@
             this.corredores[index] = {...this.corredorToEdit, ...this.formData };
           }
           this.dialogEdit = false;
+          this.showSnackbar('Corredor editado com sucesso!', 'green');
         } catch (error) {
-          console.error('erro ao editar corredor:', error);
+          this.showSnackbar('Erro ao excluir o corredor', 'red');
         }
       },
 

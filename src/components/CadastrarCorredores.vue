@@ -179,7 +179,7 @@ export default {
 
 .formCad {
   width: 100%; /* Largura do formulário */
-  padding: 15px; /* Espaçamento interno */
+  padding: 8px; /* Espaçamento interno */
   border-radius: 8px; /* Bordas arredondadas */
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.89); /* Sombra suave */
 }
