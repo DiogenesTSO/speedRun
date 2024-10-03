@@ -16,7 +16,7 @@
     <v-divider></v-divider>
 
     <v-list density="compact" nav>
-      <v-list-item prepend-icon="mdi-finance" title="Dashboard" value="myfiles" @click="viewDashboard"></v-list-item>
+      <v-list-item prepend-icon="mdi-finance" title="Dashboard" value="myfiles" @click="$router.push('/home/dashboard')"></v-list-item>
       <v-list-item prepend-icon="mdi-history" title="Histórico" value="shared"></v-list-item>
       <v-list-group value="Cadastrar">
         <template #activator="{ props }">
@@ -25,8 +25,8 @@
           prepend-icon="mdi-account-check"
           title="Cadastrar"></v-list-item>
         </template>
-        <v-list-item prepend-icon="mdi-run-fast" title="Corredores" value="fast" @click="showCorredoresForms"></v-list-item>
-        <v-list-item prepend-icon="mdi-view-list" title="Listar Corredores" value="list-fast" @click="viewCorredores"></v-list-item>
+        <v-list-item prepend-icon="mdi-run-fast" title="Corredores" value="fast" @click="$router.push('/home/cadastro-corredores')"></v-list-item>
+        <v-list-item prepend-icon="mdi-view-list" title="Listar Corredores" value="list-fast" @click="$router.push('/home/listar-corredores')"></v-list-item>
       </v-list-group>
       <v-list-item prepend-icon="mdi-update" title="Interface de Controles" value="starred"></v-list-item>
       <v-list-item prepend-icon="mdi-calendar-edit" title="Gestão de Eventos" value="starred"></v-list-item>
@@ -39,30 +39,16 @@
 
   </v-navigation-drawer>
 
-  <v-main>
-      <v-container>
-        <dashboard-layout v-if="showDashboard" />
-        <cadastro-corredores v-if="showCadastro" />
-        <corredores-list v-if="showCorredores" />
-      </v-container>
+    <v-main>
+      <router-view></router-view>  
     </v-main>
 
 </template>
-<v-card>
-</v-card> 
 
 <script>
-import CorredoresList from './ListarCorredores.vue';
-import CadastroCorredores from './CadastrarCorredores.vue';
-import DashboardLayout from './DashboardLayout.vue';
 
 export default {
   name: 'menuComponent',
-  components: {
-    CorredoresList,
-    CadastroCorredores,
-    DashboardLayout,
-  },
   data() {
     return {
       showDashboard: false,
