@@ -112,6 +112,14 @@
                 ></v-icon>
 
                 <div class="text-h5 font-weight-bold">Ocorreu um erro no cadastro!</div>
+
+                <v-list v-if="errorMessage.length">
+                  <v-list-item v-for="(error, index) in errorMessage" :key="index">
+                    <v-list-item-content>
+                      <v-list-item-title class="text-error">{{ error }}</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list>
               </div>
 
               <v-divider></v-divider>
@@ -137,6 +145,7 @@ export default {
             },
             dialogSuccess: false,
             dialogError: false,
+            errorMessage: [],
         };
     },
     methods: {
@@ -150,9 +159,18 @@ export default {
                 },
                 body: JSON.stringify(corredor),
             })
+            .then((response) => {
+              if (!response.ok) {
+                return response.json().then((errData) => {
+                  throw errData;
+                });
+              }
+              return response.json();
+            })
             .then(() => {
                 this.dialogSuccess = true;
 
+                //Reseta o formulário após sucesso.
                 this.formData = {
                     nome: "",
                     email: "",
@@ -162,7 +180,12 @@ export default {
                     sexo: "",
                 };
             })
-            .catch(() => {
+            .catch((error) => {
+              if (error.errors) {
+                this.errorMessage = Object.values(error.errors).flat();
+              } else {
+                this.errorMessage = ["Ocorreu um erro inesperado"];
+              }
                 this.dialogError = true;
             });
         },

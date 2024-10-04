@@ -19,7 +19,11 @@
         <v-col>
           <v-card>
             <v-card-title>Gráfico de Desempenho</v-card-title>
-            <vue-chart :data="chartData" />
+            <apexcharts
+              type="bar"
+              :options="chartOptions"
+              :series="chartData"
+            />
           </v-card>
         </v-col>
       </v-row>
@@ -27,31 +31,37 @@
   </template>
   
   <script>
+  import { VueApexCharts } from "vue3-apexcharts";
   import axios from 'axios';
-  import VueChart from 'vue-chartjs';
   
   export default {
-    components: {
-      VueChart
+    components: { apexcharts: VueApexCharts,
     },
     data() {
       return {
         totalUsers: 0,
         sales: 3000,
-        chartData: {
-          labels: ['Jan', 'Fev', 'Mar', 'Abr'],
-          datasets: [
-            {
-              label: 'Vendas',
-              data: [100, 200, 300, 400],
-              backgroundColor: 'blue'
-            }
-          ]
-        }
+        chartData: [],
+        chartOptions: {
+            chart: {
+              id: "performance-chart",
+            toolbar: {
+              show: false,
+            },
+          },
+          xaxis: {
+            categories: ["Jan", "Fev", "Mar", "Abr"],
+          },
+          title: {
+            text: "Vendas Mensais",
+            align: "center",
+          },
+        },
       };
     },
     mounted() {
         this.getCorredoresCount();
+        this.fetchChartData();
     },
     methods: {
         async getCorredoresCount() {
@@ -61,7 +71,16 @@
             } catch (error) {
                 console.error('Erro ao buscar o total de inscritos', error);
             }
-        }
+        },
+        fetchChartData() {
+          // Exemplo de dados, você pode substituir por dados dinâmicos
+          this.chartData = [
+            {
+              name: "Vendas",
+              data: [100, 200, 300, 400],
+            },
+          ];
+        },
     }
   };
   </script>
