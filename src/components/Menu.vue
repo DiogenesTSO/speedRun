@@ -29,7 +29,7 @@
         <v-list-item prepend-icon="mdi-view-list" title="Listar Corredores" value="list-fast" @click="$router.push('/home/listar-corredores')"></v-list-item>
       </v-list-group>
       <v-list-item prepend-icon="mdi-update" title="Interface de Controles" value="starred"></v-list-item>
-      <v-list-item prepend-icon="mdi-calendar-edit" title="Gestão de Eventos" value="starred"></v-list-item>
+      <v-list-item prepend-icon="mdi-calendar-edit" title="Gestão de Eventos" value="starred" @click="$router.push('/home/eventos')"></v-list-item>
     </v-list>
 
     <v-spacer></v-spacer>
@@ -54,6 +54,7 @@ export default {
       showDashboard: false,
       showCadastro: false, 
       showCorredores: false,
+      showEventos: false,
     };
   },
   methods: {
@@ -61,15 +62,23 @@ export default {
       this.showDashboard = true;
       this.showCadastro = false;
       this.showCorredores = false;
-
+      this.showEventos = false;
     },
     showCorredoresForms() {
       this.showCadastro = true;
       this.showCorredores = false;
       this.showDashboard = false;
+      this.showEventos = false;
     },
     viewCorredores() {
       this.showCorredores = true;
+      this.showCadastro = false;
+      this.showDashboard = false;
+      this.showEventos = false;
+    },
+    viewEventos() {
+      this.showEventos = true;
+      this.showCorredores = false;
       this.showCadastro = false;
       this.showDashboard = false;
     },

@@ -4,6 +4,7 @@ import Menu from '@/components/Menu.vue';
 import CadastrarCorredores from '@/components/CadastrarCorredores.vue';
 import ListarCorredores from '@/components/ListarCorredores.vue';
 import LoginPage from '@/components/LoginPage.vue';
+import GestaoEventos from '@/components/GestaoEventos.vue';
 
 const routes = [
   {
@@ -25,6 +26,10 @@ const routes = [
       {
         path: 'listar-corredores',
         component: ListarCorredores,
+      },
+      {
+        path: 'eventos',
+        component: GestaoEventos,
       },
     ]
   },
